@@ -1,12 +1,27 @@
+# -*- coding: utf-8 -*-
+
 import json
 import datetime
+import boto3
+
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('book-management-sample2')
 
 
 def handler(event, context):
-    data = {
-        'output': 'Hello World',
-        'timestamp': datetime.datetime.utcnow().isoformat()
-    }
+    
+    result = query("hoge")
+    
+    data = json.dumps(result)
     return {'statusCode': 200,
-            'body': json.dumps(data),
+            'body': data,
             'headers': {'Content-Type': 'application/json'}}
+
+
+def query(name):
+    result = table.get_item(
+        Key = {
+            "name" : name,
+        }
+    )
+    return result

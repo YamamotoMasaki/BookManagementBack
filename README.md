@@ -63,3 +63,19 @@ should also regularly review and apply any available patches or associated secur
 advisories for dependencies used within your application.
 
 Best Practices: https://docs.aws.amazon.com/codestar/latest/userguide/best-practices.html?icmpid=docs_acs_rm_sec
+
+
+## cloud9上での環境構築メモ
+
+/home/ec2-user/environmentで以下のコマンドを実行
+ cd BookManagementBack
+ mkdir lib
+ cd lib
+ pip install --upgrade boto3 mock -t .
+ export PYTHONPATH=/home/ec2-user/environment/BookManagementBack/lib
+
+
+## cloud9上での単体テスト実行メモ
+
+MS2BookManagement/testsに単体テストを書いた後、以下のコマンドを実行するとフォルダ内のすべてのテストが実行される
+ python -m unittest discover /home/ec2-user/environment/BookManagementBack/tests

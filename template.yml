@@ -6,9 +6,11 @@ Transform:
 Parameters:
   ProjectId:
     Type: String
+    Default: ''
     Description: CodeStar projectId used to associate new resources to team members
   CodeDeployRole:
     Type: String
+    Default: ''
     Description: IAM role to allow AWS CodeDeploy to manage deployment of AWS Lambda functions
   Stage:
     Type: String
@@ -56,6 +58,50 @@ Resources:
             Service: [lambda.amazonaws.com]
           Action: sts:AssumeRole
       Path: /
+      Policies:
+        - PolicyName: DynamoAccessPolicy
+          PolicyDocument:
+           Version: '2012-10-17'
+           Statement:
+           - Effect: "Allow"
+             Action: 
+             - dynamodb:Query
+             - dynamodb:Scan
+             - dynamodb:GetItem
+             - dynamodb:PutItem
+             - dynamodb:UpdateItem
+             - dynamodb:DeleteItem
+             Resource: "*"
       ManagedPolicyArns:
         - !Sub 'arn:${AWS::Partition}:iam::aws:policy/service-role/AWSLambdaBasicExecutionRole'
       PermissionsBoundary: !Sub 'arn:${AWS::Partition}:iam::${AWS::AccountId}:policy/CodeStar_${ProjectId}_PermissionsBoundary'
+  Hello:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: hello.handler
+      Runtime: python3.7
+      Role:
+        Fn::GetAtt:
+        - LambdaExecutionRole
+        - Arn
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /hello/{name}
+            Method: get
+  ProductTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    Properties:
+      TableName: book-management-sample2
+      AttributeDefinitions:
+        - AttributeName: name
+          AttributeType: S
+      KeySchema:
+        - AttributeName: name
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
+  
