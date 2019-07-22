@@ -2,7 +2,7 @@ import json
 
 def handler(event, context):
   data = {
-    'output': 'Hello? ' + event["pathParameters"]["name"]
+    'output': 'Hello?? ' + event["pathParameters"]["name"]
   }
   return {'statusCode': 200,
     'body': json.dumps(data),
