@@ -71,7 +71,7 @@ Best Practices: https://docs.aws.amazon.com/codestar/latest/userguide/best-pract
  cd BookManagementBack
  mkdir lib
  cd lib
- pip install --upgrade boto3 mock -t .
+ pip install --upgrade boto3 mock moto -t .
  export PYTHONPATH=/home/ec2-user/environment/BookManagementBack/lib
 
 

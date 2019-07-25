@@ -88,8 +88,8 @@ Resources:
         GetEvent:
           Type: Api
           Properties:
-            Path: /hello/{name}
-            Method: get
+            Path: /hello
+            Method: post
   ProductTable:
     Type: AWS::DynamoDB::Table
     DeletionPolicy: Retain

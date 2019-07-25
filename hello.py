@@ -1,9 +1,19 @@
+# -*- coding: utf-8 -*-
+
 import json
+import boto3
+
+dynamodb = boto3.resource('dynamodb')
+table = dynamodb.Table('book-management-sample2')
 
 def handler(event, context):
-  data = {
-    'output': 'Hello?? ' + event["pathParameters"]["name"]
-  }
-  return {'statusCode': 200,
-    'body': json.dumps(data),
-    'headers': {'Content-Type': 'application/json'}}
+  put(json.loads(event["body"]))
+
+def put(body):
+    result = table.put_item(
+        Item = {
+            "name" : body["name"],
+            "address" : body["address"],
+        }
+    )
+    return result
