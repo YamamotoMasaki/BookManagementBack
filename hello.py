@@ -17,10 +17,10 @@ def put(body):
         }
     )
     
-    request = {
+    response = {
         "statusCode": "200",
         'headers': {'Content-Type': 'application/json'},
         "body": "{\n \"request\": \"success\"}"
     }
     
-    return request
+    return response
