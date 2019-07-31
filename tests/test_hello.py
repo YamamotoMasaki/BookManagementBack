@@ -2,16 +2,17 @@
 
 import unittest
 import hello
-import boto3
-import json
 
 # Python のモックライブラリ
 from moto import mock_dynamodb2, mock_dynamodb2_deprecated
 
+import boto3
+import json
+
+
 class TestHandlerCase(unittest.TestCase):
 
-    # botocoreのバージョンの関係上、現在のmotoでは@mock_dynamody2が使えないらしい
-    @mock_dynamodb2_deprecated
+    @mock_dynamodb2
     def test_response(self):
         
         # DynamoDBのモックの作成
