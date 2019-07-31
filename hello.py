@@ -10,10 +10,17 @@ def handler(event, context):
   put(json.loads(event["body"]))
 
 def put(body):
-    result = table.put_item(
+    table.put_item(
         Item = {
             "name" : body["name"],
             "address" : body["address"],
         }
     )
-    return result
+    
+    request = {
+        "statusCode": "200",
+        'headers': {'Content-Type': 'application/json'},
+        "body": "{\n \"request\": \"success\"}"
+    }
+    
+    return request
