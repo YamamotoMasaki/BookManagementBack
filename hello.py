@@ -2,20 +2,27 @@
 
 import json
 import boto3
+import re
 
 dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('book-management-sample2')
 
 def handler(event, context):
-    
-  print(event) 
-  put(json.loads(event["body"]))
+  print(event["body"])
+  put(event["body"])
 
+# bodyは"name=xxx&address=xxx"の形式
 def put(body):
+    
+    # 本当はurllibのparseを使いたかったが、なぜかできなかったので、正規表現で分解
+    name = re.search(r"(?<=name=)(.*)(?=&)", body).group()
+    print(name)
+    address = re.search(r"(?<=&address=)(.*)", body).group()
+    
     table.put_item(
         Item = {
-            "name" : body["name"],
-            "address" : body["address"],
+            "name" : name,
+            "address" : address,
         }
     )
     
