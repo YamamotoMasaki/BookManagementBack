@@ -7,6 +7,8 @@ dynamodb = boto3.resource('dynamodb')
 table = dynamodb.Table('book-management-sample2')
 
 def handler(event, context):
+    
+  print(event) 
   put(json.loads(event["body"]))
 
 def put(body):
