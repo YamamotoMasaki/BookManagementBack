@@ -67,13 +67,42 @@ Best Practices: https://docs.aws.amazon.com/codestar/latest/userguide/best-pract
 
 ## cloud9上での環境構築メモ
 
-/home/ec2-user/environmentで以下のコマンドを実行
- cd BookManagementBack
- mkdir lib
- cd lib
- pip install --upgrade boto3 mock moto -t .
- export PYTHONPATH=/home/ec2-user/environment/BookManagementBack/lib
+* Python3への乗り換え
 
+以下のコマンドを実行し、pyenvをインストール・設定
+・git clone https://github.com/pyenv/pyenv.git ~/.pyenv
+・echo 'export PYENV_ROOT="$HOME/.pyenv"' >> ~/.bash_profile
+・echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
+・echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
+・source ~/.bash_profile
+・pyenv --version　（バージョン情報が出れば成功）
+
+以下のコマンドを実行し、python3.7.1をインストール
+・pyenv install 3.7.1
+
+以下のコマンドを実行し、エイリアスを修正 （本当はこの方法ではなく、pyenvの切り替えでやりたい）
+・emacs ~/.bashrc
+ →alias python='python27'　と書いてある行を探し、27→3に修正
+ →ctrl+x,ctrl+sで保存し、ctrl+x,ctrl+cで閉じる
+
+以下のコマンドで修正内容の反映
+・source ~/.bash_profile
+・which python　（alias python='python3' ~/.pyenv/shims/python3と表示されたら成功）
+
+* 外部ライブラリのインストール
+
+/home/ec2-user/environmentで以下のコマンドを実行
+ ・cd BookManagementBack
+ ・mkdir lib
+ ・cd lib
+ ・pip install boto3==1.7.84 mock moto==1.3.5 awscli==1.15.85 -t .
+
+外部ライブラリのパスを通すため、以下のコマンドを実行
+ ・emacs /home/ec2-user/.pyenv/versions/3.7.1/lib/python3.7/site-packages/importpath.pth
+  →emacsが起動するので、以下を入力してからctrl+x,ctrl+sで保存し、ctrl+x,ctrl+cで閉じる
+    /home/ec2-user/environment/BookManagementBack/lib
+    /home/ec2-user/environment/BookManagementBack
+ 
 
 ## cloud9上での単体テスト実行メモ
 
