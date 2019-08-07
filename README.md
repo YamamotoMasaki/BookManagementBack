@@ -75,9 +75,10 @@ Best Practices: https://docs.aws.amazon.com/codestar/latest/userguide/best-pract
 ・echo 'export PATH="$PYENV_ROOT/bin:$PATH"' >> ~/.bash_profile
 ・echo 'eval "$(pyenv init -)"' >> ~/.bash_profile
 ・source ~/.bash_profile
-・pyenv --version　（バージョン情報が出れば成功）
+・pyenv --version　（確認用コマンド。pyenvのバージョン情報が出れば成功）
 
 以下のコマンドを実行し、python3.7.1をインストール
+・sudo yum install bzip2-devel (事前準備)
 ・pyenv install 3.7.1
 
 以下のコマンドを実行し、エイリアスを修正 （本当はこの方法ではなく、pyenvの切り替えでやりたい）
@@ -87,7 +88,11 @@ Best Practices: https://docs.aws.amazon.com/codestar/latest/userguide/best-pract
 
 以下のコマンドで修正内容の反映
 ・source ~/.bash_profile
-・which python　（alias python='python3' ~/.pyenv/shims/python3と表示されたら成功）
+・which python　（確認用コマンド。alias python='python3' ~/.pyenv/shims/python3と表示されたら成功）
+
+以下のコマンドを実行し、python3.7.1へ切り替える
+・pyenv global 3.7.1
+・pyenv versions　（確認用コマンド。3.7.1にアスタリスクがついていたら成功）
 
 * 外部ライブラリのインストール
 
@@ -98,10 +103,10 @@ Best Practices: https://docs.aws.amazon.com/codestar/latest/userguide/best-pract
  ・pip install boto3==1.7.84 mock moto==1.3.5 awscli==1.15.85 -t .
 
 外部ライブラリのパスを通すため、以下のコマンドを実行
- ・emacs /home/ec2-user/.pyenv/versions/3.7.1/lib/python3.7/site-packages/importpath.pth
-  →emacsが起動するので、以下を入力してからctrl+x,ctrl+sで保存し、ctrl+x,ctrl+cで閉じる
-    /home/ec2-user/environment/BookManagementBack/lib
-    /home/ec2-user/environment/BookManagementBack
+ ・echo '/home/ec2-user/environment/BookManagementBack/lib' >> ~/.pyenv/versions/3.7.1/lib/python3.7/site-packages/importpath.pth
+ ・echo '/home/ec2-user/environment/BookManagementBack' >> ~/.pyenv/versions/3.7.1/lib/python3.7/site-packages/importpath.pth
+ ・cat ~/.pyenv/versions/3.7.1/lib/python3.7/site-packages/importpath.pth
+ 　(確認用コマンド。 /home/ec2-user/environment/BookManagementBack/lib と /home/ec2-user/environment/BookManagementBack があれば成功
  
 
 ## cloud9上での単体テスト実行メモ
