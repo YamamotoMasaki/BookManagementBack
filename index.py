@@ -18,6 +18,14 @@ def handler(event, context):
             'headers': {'Content-Type': 'application/json'}}
 
 
+"""
+ユーザ名でテーブルを検索する。
+
+Args:
+  name: ユーザの名前（book-management-sample2の主キー）
+Returns:
+  book-management-sample2の検索結果1件
+"""
 def query(name):
     result = table.get_item(
         Key = {
