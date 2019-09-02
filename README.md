@@ -107,8 +107,8 @@ Best Practices: https://docs.aws.amazon.com/codestar/latest/userguide/best-pract
  ・echo '/home/ec2-user/environment/BookManagementBack' >> ~/.pyenv/versions/3.7.1/lib/python3.7/site-packages/importpath.pth
  ・cat ~/.pyenv/versions/3.7.1/lib/python3.7/site-packages/importpath.pth
  　(確認用コマンド。 /home/ec2-user/environment/BookManagementBack/lib と /home/ec2-user/environment/BookManagementBack があれば成功
- 
 
+ 
 ## cloud9上での単体テスト実行メモ
 
 MS2BookManagement/testsに単体テストを書いた後、以下のコマンドを実行するとフォルダ内のすべてのテストが実行される
