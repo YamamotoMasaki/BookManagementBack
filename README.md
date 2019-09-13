@@ -113,3 +113,8 @@ Best Practices: https://docs.aws.amazon.com/codestar/latest/userguide/best-pract
 
 MS2BookManagement/testsに単体テストを書いた後、以下のコマンドを実行するとフォルダ内のすべてのテストが実行される
  python -m unittest discover /home/ec2-user/environment/BookManagementBack/tests
+
+※ 「test_hello.py」の単体テストを試す場合
+Cloud9のリージョンがオハイオの人は「test_hello.py」の20行目を以下に変える。
+ dynamodb = boto3.resource('dynamodb', 'us-east-2')
+                                           ↑リージョンによって変更
