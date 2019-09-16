@@ -104,4 +104,33 @@ Resources:
       ProvisionedThroughput:
         ReadCapacityUnits: 1
         WriteCapacityUnits: 1
+  RegistDb:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: src/regist_db.handler
+      Runtime: python3.7
+      Role:
+        Fn::GetAtt:
+        - LambdaExecutionRole
+        - Arn
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /regist_db
+            Method: post
+  ProductTable:
+    Type: AWS::DynamoDB::Table
+    DeletionPolicy: Retain
+    Properties:
+      TableName: book-management-db
+      AttributeDefinitions:
+        - AttributeName: bookname
+          AttributeType: S
+      KeySchema:
+        - AttributeName: bookname
+          KeyType: HASH
+      ProvisionedThroughput:
+        ReadCapacityUnits: 1
+        WriteCapacityUnits: 1
   
