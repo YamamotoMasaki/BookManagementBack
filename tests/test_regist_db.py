@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-from src import regist_db
+import regist_db
 
 # Python のモックライブラリ
 from moto import mock_dynamodb2
