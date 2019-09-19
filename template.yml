@@ -107,7 +107,7 @@ Resources:
   RegistDb:
     Type: AWS::Serverless::Function
     Properties:
-      Handler: src/regist_db.handler
+      Handler: regist_db.handler
       Runtime: python3.7
       Role:
         Fn::GetAtt:
