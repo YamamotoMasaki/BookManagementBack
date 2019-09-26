@@ -117,7 +117,12 @@ Resources:
         GetEvent:
           Type: Api
           Properties:
-            Path: /regist_db
+            Path: /book-management/regist-db
+            Method: get
+        PostEvent:
+          Type: Api
+          Properties:
+            Path: /book-management/regist-db
             Method: post
   ProductTable:
     Type: AWS::DynamoDB::Table
