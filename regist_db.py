@@ -26,10 +26,12 @@ def handler(event, context):
     
     # クエリ文字列の生成
     url += "?{0}".format( urllib.parse.urlencode( param ) )
-
     
-    return {'statusCode': 201,
-            'headers': {'Location': url}}
+    return {"isBase64Encoded": False,
+            'statusCode': 201,
+            'headers': {'Location': url},
+            'body': "bookname=" + name
+    }
 
 # bodyは"name=xxx"の形式
 def put(body):
