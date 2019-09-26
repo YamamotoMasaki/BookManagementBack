@@ -28,7 +28,7 @@ def handler(event, context):
     url += "?{0}".format( urllib.parse.urlencode( param ) )
     
     return {"isBase64Encoded": False,
-            'statusCode': 201,
+            'statusCode': 302,
             'headers': {'Location': url},
             'body': "bookname=" + name
     }
