@@ -13,27 +13,31 @@ def handler(event, context):
     # 送信先URL
     url = "https://master.dfxtb3bbf4p7x.amplifyapp.com/registResult"
     
+    # bodyは"bookname=xxx"の形式
     # 正規表現で分解
-    name = re.search(r"(?<=bookname=)(.*)", event["body"]).group()
+    #name = re.search(r"(?<=bookname=)(.*)", event["body"]).group()
+    
+    #bodyではなくqueryStringParametersに入ってるぽいのでお試し
+    name = event["queryStringParameters"]
     
     # DBに挿入
-    put(name)
+    put(name["bookname"])
     
     # getパラメータ
-    param = [
-        ( "bookname", name),
-    ]
+    # param = [
+    #     ( "bookname", name),
+    # ]
     
     # クエリ文字列の生成
-    url += "?{0}".format( urllib.parse.urlencode( param ) )
+    url += "?{0}".format( urllib.parse.urlencode( name ) )
     
-    return {"isBase64Encoded": False,
-            'statusCode': 302,
-            'headers': {'Location': url},
-            'body': "bookname=" + name
+    print(url)
+    
+    return {"statusCode": 200,
+            "headers": {"Content-Type": "text/javascript"},
+            "body": url
     }
 
-# bodyは"name=xxx"の形式
 def put(body):
     
     table.put_item(
