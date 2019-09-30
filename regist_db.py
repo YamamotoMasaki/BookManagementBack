@@ -13,6 +13,7 @@ def handler(event, context):
     # 送信先URL
     url = "https://master.dfxtb3bbf4p7x.amplifyapp.com/registResult"
     
+    # bodyは"bookname=xxx"の形式
     # 正規表現で分解
     name = re.search(r"(?<=bookname=)(.*)", event["body"]).group()
     
@@ -27,13 +28,11 @@ def handler(event, context):
     # クエリ文字列の生成
     url += "?{0}".format( urllib.parse.urlencode( param ) )
     
-    return {"isBase64Encoded": False,
-            'statusCode': 302,
-            'headers': {'Location': url},
-            'body': "bookname=" + name
+    return {"statusCode": 200,
+            "headers": {"Content-Type": "text/javascript"},
+            "body": url
     }
 
-# bodyは"name=xxx"の形式
 def put(body):
     
     table.put_item(
