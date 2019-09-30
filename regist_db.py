@@ -33,10 +33,15 @@ def handler(event, context):
     
     print(url)
     
-    return {"statusCode": 200,
-            "headers": {"Content-Type": "text/javascript"},
-            "body": url
+    return {"statusCode": 302,
+            "headers": {"Location": url},
+            "body": ""
     }
+    
+    # return {"statusCode": 200,
+    #         "headers": {"Content-Type": "text/javascript"},
+    #         "body": url
+    # }
 
 def put(body):
     
