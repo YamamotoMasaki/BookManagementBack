@@ -11,37 +11,22 @@ table = dynamodb.Table('book-management-db')
 def handler(event, context):
     
     # 送信先URL
-    url = "https://master.dfxtb3bbf4p7x.amplifyapp.com/registResult"
+    url = "https://master.dfxtb3bbf4p7x.amplifyapp.com/registResult/"
     
-    # bodyは"bookname=xxx"の形式
-    # 正規表現で分解
-    #name = re.search(r"(?<=bookname=)(.*)", event["body"]).group()
-    
-    #bodyではなくqueryStringParametersに入ってるぽいのでお試し
+    #bodyではなくqueryStringParametersに入ってる
     name = event["queryStringParameters"]
     
     # DBに挿入
     put(name["bookname"])
     
-    # getパラメータ
-    # param = [
-    #     ( "bookname", name),
-    # ]
-    
     # クエリ文字列の生成
     url += "?{0}".format( urllib.parse.urlencode( name ) )
     
-    print(url)
-    
+    #HTTPリダイレクトで返す
     return {"statusCode": 302,
             "headers": {"Location": url},
             "body": ""
     }
-    
-    # return {"statusCode": 200,
-    #         "headers": {"Content-Type": "text/javascript"},
-    #         "body": url
-    # }
 
 def put(body):
     
