@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 
 import unittest
-import regist_db
+import scan_db
 
 # Python のモックライブラリ
 from moto import mock_dynamodb2
@@ -44,23 +44,35 @@ class TestHandlerCase(unittest.TestCase):
             }
         )
         
-        # 入力値の作成
-        event = {
-            'queryStringParameters': {"bookname":"aaa"}
-        }
+        #テストデータの作成
+        table.put_item(
+            Item = {
+                'bookname' : 'aaa',
+            }
+        )
+        
+        table.put_item(
+            Item = {
+                'bookname' : 'bbb',
+            }
+        )
+        
+        table.put_item(
+            Item = {
+                'bookname' : 'ccc',
+            }
+        )
         
         # 期待値の作成
-        expected = [{
-            "bookname": "aaa",
-            }]
+        expected = {'statusCode': 302, 
+                    'headers': {'Location': 'https://master.dfxtb3bbf4p7x.amplifyapp.com/list/?bookname=aaa&bookname=bbb&bookname=ccc'}, 
+                    'body': ''}
         
         # テスト対象を実行
-        result = regist_db.handler(event, None)
+        result = scan_db.handler(None, None)
         
-        # 関数の呼び出し結果がテーブルから取り出した結果と一致するかを検証
-        scan_result = table.scan()
-        result_body = scan_result.get('Items')
-        self.assertEqual(result_body, expected)
+        # 関数の呼び出し結果検証
+        self.assertEqual(expected, result)
         
 
 if __name__ == '__main__':

@@ -124,6 +124,26 @@ Resources:
           Properties:
             Path: /book-management/regist-db
             Method: post
+  ScanDb:
+    Type: AWS::Serverless::Function
+    Properties:
+      Handler: scan_db.handler
+      Runtime: python3.7
+      Role:
+        Fn::GetAtt:
+        - LambdaExecutionRole
+        - Arn
+      Events:
+        GetEvent:
+          Type: Api
+          Properties:
+            Path: /book-management/scan-db
+            Method: get
+        PostEvent:
+          Type: Api
+          Properties:
+            Path: /book-management/scan-db
+            Method: post
   ProductTable:
     Type: AWS::DynamoDB::Table
     DeletionPolicy: Retain
